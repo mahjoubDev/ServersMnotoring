@@ -1,7 +1,8 @@
 package com.sagem.monotoring.session;
 
+import java.util.List;
+
 import javax.ejb.Remote;
-import javax.ejb.Stateless;
 
 import com.sagem.monotoring.entity.PrintJob;
 import com.sagem.monotoring.entity.Printer;
@@ -15,7 +16,7 @@ public interface MonotoringSessionRemote {
 
 	public PrintJob findPrintJob(int id);
 
-	public void addPrinter(Printer printer);
+	public void addPrinter(List<Printer> printer);
 
 	public void updatePrinter(Printer printer);
 

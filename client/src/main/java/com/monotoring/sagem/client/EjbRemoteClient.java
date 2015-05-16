@@ -17,7 +17,7 @@ import com.sagem.monotoring.session.MonotoringSessionRemote;
  * Remote EJB Client.
  * 
  * @author achref
- *
+ * 
  */
 public class EjbRemoteClient {
 
@@ -27,7 +27,7 @@ public class EjbRemoteClient {
 	 * @param args
 	 *            (not used)
 	 */
-	public static void main(String[] args) {
+	public static MonotoringSessionRemote GetEjbReference() {
 
 		// Connection to Wildfly Server instance
 		String host = "127.0.0.1";
@@ -39,22 +39,23 @@ public class EjbRemoteClient {
 		} catch (NamingException e) {
 			System.err.println("Error setting up remoting context");
 			e.printStackTrace();
-			return;
+			return null;
 		}
 
 		String ejbUrl = "ejb:/ejb-remote-server/MonotoringSessionBean!com.sagem.monotoring.session.MonotoringSessionRemote";
 
 		MonotoringSessionRemote service;
 		try {
-			service = createEjbProxy(remotingContext, ejbUrl, MonotoringSessionRemote.class);
+			service = createEjbProxy(remotingContext, ejbUrl,
+					MonotoringSessionRemote.class);
 		} catch (NamingException e) {
 			System.err.println("Error resolving bean");
 			e.printStackTrace();
-			return;
+			return null;
 		} catch (ClassCastException e) {
 			System.err.println("Resolved EJB is of wrong type");
 			e.printStackTrace();
-			return;
+			return null;
 		}
 
 		// Call remote method with parameter
@@ -67,11 +68,12 @@ public class EjbRemoteClient {
 		} catch (Exception e) {
 			System.err.println("Error accessing remote bean");
 			e.printStackTrace();
-			return;
+			return null;
 		}
-
 		// Hello World!
 		System.out.println("Example result: " + exampleResult);
+		return service;
+
 	}
 
 	/**
@@ -85,20 +87,26 @@ public class EjbRemoteClient {
 	 * @throws NamingException
 	 *             if creating the context fails
 	 */
-	private static Context createRemoteEjbContext(String host, String port) throws NamingException {
+	private static Context createRemoteEjbContext(String host, String port)
+			throws NamingException {
 
 		Hashtable<Object, Object> props = new Hashtable<>();
 
-		props.put(INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+		props.put(INITIAL_CONTEXT_FACTORY,
+				"org.jboss.naming.remote.client.InitialContextFactory");
 		props.put(URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 
 		props.put("jboss.naming.client.ejb.context", false);
 		props.put("org.jboss.ejb.client.scoped.context", true);
 
 		props.put("endpoint.name", "client-endpoint");
-		props.put("remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED", false);
+		props.put(
+				"remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED",
+				false);
 		props.put("remote.connections", "default");
-		props.put("remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS", false);
+		props.put(
+				"remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS",
+				false);
 
 		props.put(PROVIDER_URL, "http-remoting://" + host + ":" + port);
 		props.put("remote.connection.default.host", host);
@@ -125,8 +133,9 @@ public class EjbRemoteClient {
 	 *             if the EJB proxy is not of the given type
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> T createEjbProxy(Context remotingContext, String ejbUrl, Class<T> ejbInterfaceClass)
-			throws NamingException, ClassCastException {
+	private static <T> T createEjbProxy(Context remotingContext, String ejbUrl,
+			Class<T> ejbInterfaceClass) throws NamingException,
+			ClassCastException {
 		Object resolvedproxy = remotingContext.lookup(ejbUrl);
 		return (T) resolvedproxy;
 	}

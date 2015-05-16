@@ -168,6 +168,18 @@ public class Printer implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public String toString() {
+		return "Printer [PrinterID=" + PrinterID + ", DeviceID=" + DeviceID
+				+ ", PrintProcessor=" + PrintProcessor + ", PrinterStatus="
+				+ PrinterStatus + ", PrinterState=" + PrinterState
+				+ ", KeepPrintedJobs=" + KeepPrintedJobs + ", Status=" + Status
+				+ ", StatusInfo=" + StatusInfo + ", AveragePagesPerMinute="
+				+ AveragePagesPerMinute + ", PortName=" + PortName
+				+ ", CapabilityDescriptions=" + CapabilityDescriptions
+				+ ", DefaultPriority=" + DefaultPriority + "]";
+	}
     
     
 

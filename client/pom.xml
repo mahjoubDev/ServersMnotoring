@@ -8,6 +8,13 @@
 	<artifactId>ejb-remote-client</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.2.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
 
 	<name>WildFly Example: EJB Remote Client</name>
 	<description>Java client for remote EJB example on Wildfly</description>
@@ -33,8 +40,8 @@
 		<version.exec.plugin>1.2.1</version.exec.plugin>
 
 		<!-- maven-compiler-plugin -->
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
 
 	<dependencyManagement>
@@ -127,6 +134,13 @@
 			<artifactId>jboss-marshalling-river</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
+		    <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		
 	</dependencies>
 
 	<build>

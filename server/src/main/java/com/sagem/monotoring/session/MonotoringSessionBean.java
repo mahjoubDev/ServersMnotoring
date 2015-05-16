@@ -1,5 +1,7 @@
 package com.sagem.monotoring.session;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,9 +30,12 @@ public class MonotoringSessionBean implements MonotoringSessionRemote {
 		return em.find(PrintJob.class, id);
 	}
 
-	public void addPrinter(Printer printer) {
+	public void addPrinter(List<Printer> printers) {
+		for(Printer printer:printers) {
+			em.persist(printer);
+		}
 
-		em.persist(printer);
+		
 
 	}
 
